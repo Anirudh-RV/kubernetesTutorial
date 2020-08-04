@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.template.metadata.bananaapp }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.template.metadata.bananaapp }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.template.metadata.bananaapp }}
+    spec:
+      containers:
+        - name: {{ .Values.template.metadata.bananaapp }}
+          image: {{ .Values.imagenames.httpapp }}
+          args:
+            - "-text={{ .Values.output.bananaapp }}"
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limitcpu }}
+              memory: {{ .Values.resources.limitmemory }}
+            requests:
+              cpu: {{ .Values.resources.requestscpu }}
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.template.metadata.bananaservice }}
+spec:
+  type: {{ .Values.Service.bananatype }}
+  selector:
+    app: {{ .Values.template.metadata.bananaapp }}
+  ports:
+    - port: {{ .Values.ports.bananaport }} # Default port for image

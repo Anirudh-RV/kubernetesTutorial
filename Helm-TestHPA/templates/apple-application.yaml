@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.template.metadata.appleapp }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.template.metadata.appleapp }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.template.metadata.appleapp }}
+    spec:
+      containers:
+        - name: {{ .Values.template.metadata.appleapp }}
+          image: {{ .Values.imagenames.httpapp }}
+          args:
+            - "-text={{ .Values.output.appleapp }}"
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limitcpu }}
+              memory: {{ .Values.resources.limitmemory }}
+            requests:
+              cpu: {{ .Values.resources.requestscpu }}
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.template.metadata.appleservice }}
+spec:
+  type: {{ .Values.Service.appletype }}
+  selector:
+    app: {{ .Values.template.metadata.appleapp }}
+  ports:
+    - port: {{ .Values.ports.appleport }} # Default port for image

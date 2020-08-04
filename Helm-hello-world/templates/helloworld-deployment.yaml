@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.template.metadata.helloworldapp }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.template.metadata.helloworldapp }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.template.metadata.helloworldapp }}
+    spec:
+      containers:
+      - name: {{ .Values.template.containername.helloworldcontainer }}
+        image: {{ .Values.imagenames.helloworld }}
+        ports:
+        - containerPort: {{ .Values.ports.insideclusterport }}

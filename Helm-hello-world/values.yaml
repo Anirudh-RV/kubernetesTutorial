@@ -1,0 +1,16 @@
+replicaCount: 2
+imagenames:
+  helloworld: tutum/hello-world
+template:
+  metadata:
+    helloworldapp: helloworld
+    helloworldsvc: helloworldsvc
+  containername:
+    helloworldcontainer: helloworld
+ports:
+  insideclusterport: 8080
+  targetPort: 80
+  nodePort: 30001
+Service:
+  type: LoadBalancer
+  port: 8080

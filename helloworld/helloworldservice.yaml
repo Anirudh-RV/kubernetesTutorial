@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworldsvc
+spec:
+  type: LoadBalancer
+  externalIPs:
+  - 192.168.99.101
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 8080
+      # Port to forward to inside the pod
+      targetPort: 80
+      # Port accessible outside cluster
+      nodePort: 30001
+  selector:
+    app: helloworld

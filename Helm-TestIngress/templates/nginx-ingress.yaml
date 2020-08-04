@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.template.metadata.ingressname }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /{{ .Values.routes.appleapp }}
+          backend:
+            serviceName: {{ .Values.template.metadata.appleservice }}
+            servicePort: {{ .Values.ports.appleport }}
+        - path: /{{ .Values.routes.bananaapp }}
+          backend:
+            serviceName: {{ .Values.template.metadata.bananaservice }}
+            servicePort: {{ .Values.ports.bananaport }}
+        - path: /{{ .Values.routes.helloworldapp }}
+          backend:
+            serviceName: {{ .Values.template.metadata.helloworldsvc }}
+            servicePort: {{ .Values.ports.helloworldinsideclusterport }}

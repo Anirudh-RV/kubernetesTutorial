@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.template.metadata.helloworldsvc }}
+spec:
+  type: {{ .Values.Service.type }}
+  externalIPs:
+  - 192.168.99.101
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: {{ .Values.ports.insideclusterport }}
+      # Port to forward to inside the pod
+      targetPort: {{ .Values.ports.targetPort }}
+      # Port accessible outside cluster
+      nodePort: {{ .Values.ports.nodePort }}
+  selector:
+    app: {{ .Values.template.metadata.helloworldapp }}

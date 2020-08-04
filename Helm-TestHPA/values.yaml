@@ -1,0 +1,44 @@
+replicaCount: 2
+minReplicas: 3
+maxReplicas: 10
+imagenames:
+  helloworld: tutum/hello-world
+  httpapp: hashicorp/http-echo
+template:
+  metadata:
+    helloworldapp: helloworld
+    helloworldsvc: helloworldsvc
+    helloworldhpa: helloworldhpa
+    appleapp: apple-app
+    appleservice: apple-service
+    applehpa: applehpa
+    bananaapp: banana-app
+    bananaservice: banana-service
+    bananahpa: bananahpa
+    ingressname: ingress-nginx
+  containername:
+    helloworldcontainer: helloworld
+ports:
+  helloworldinsideclusterport: 8080
+  helloworldtargetPort: 80
+  appleport: 5678
+  bananaport: 5678
+  bananatargetport: 5678
+Service:
+  helloworldtype: LoadBalancer
+  appletype: ClusterIP
+  bananatype: ClusterIP
+  helloport: 8080
+  ingresscontrollertype: LoadBalancer
+resources:
+  limitcpu: 250m
+  limitmemory: 32Mi
+  requestscpu: 100m
+  targetAverageUtilization: 30
+output:
+  appleapp: apple
+  bananaapp: banana
+routes:
+  appleapp: apple
+  bananaapp: banana
+  helloworldapp: helloworld
